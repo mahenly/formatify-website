@@ -1,0 +1,1252 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formatify — Rapi itu bukan kebetulan.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #1B2B4B;
+    --navy-light: #253a63;
+    --navy-muted: #3d5278;
+    --gold: #F5C518;
+    --gold-light: #fdd44a;
+    --white: #FFFFFF;
+    --off-white: #F8F7F4;
+    --gray-100: #F2F1EE;
+    --gray-200: #E5E3DD;
+    --gray-400: #9A9589;
+    --gray-600: #5E5A52;
+    --text-dark: #1B2B4B;
+    --text-body: #3d4a5c;
+    --text-muted: #6b7280;
+    --shadow-sm: 0 1px 3px rgba(27,43,75,0.06), 0 1px 2px rgba(27,43,75,0.04);
+    --shadow-md: 0 4px 16px rgba(27,43,75,0.10), 0 2px 8px rgba(27,43,75,0.06);
+    --shadow-lg: 0 12px 40px rgba(27,43,75,0.14), 0 4px 16px rgba(27,43,75,0.08);
+    --radius: 16px;
+    --radius-sm: 10px;
+    --radius-lg: 24px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: var(--white);
+    color: var(--text-dark);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 0 5%;
+    height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(27,43,75,0.06);
+    transition: box-shadow 0.3s;
+  }
+  nav.scrolled { box-shadow: var(--shadow-sm); }
+
+  .nav-logo {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--navy);
+    letter-spacing: -0.5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+  }
+  .nav-logo .dot { color: var(--gold); }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    list-style: none;
+  }
+  .nav-links a {
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--navy); }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 24px;
+    border-radius: 100px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.22s cubic-bezier(0.34,1.56,0.64,1);
+    border: none;
+    white-space: nowrap;
+  }
+  .btn-primary {
+    background: var(--navy);
+    color: var(--white);
+    box-shadow: 0 4px 14px rgba(27,43,75,0.25);
+  }
+  .btn-primary:hover {
+    background: var(--navy-light);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(27,43,75,0.3);
+  }
+  .btn-gold {
+    background: var(--gold);
+    color: var(--navy);
+    box-shadow: 0 4px 14px rgba(245,197,24,0.35);
+  }
+  .btn-gold:hover {
+    background: var(--gold-light);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(245,197,24,0.4);
+  }
+  .btn-outline {
+    background: transparent;
+    color: var(--navy);
+    border: 1.5px solid var(--navy);
+  }
+  .btn-outline:hover {
+    background: var(--navy);
+    color: white;
+    transform: translateY(-2px);
+  }
+  .btn-sm { padding: 8px 18px; font-size: 0.82rem; }
+  .btn-lg { padding: 15px 32px; font-size: 1rem; }
+
+  /* SECTIONS */
+  section { padding: 96px 5%; }
+  .container { max-width: 1120px; margin: 0 auto; }
+
+  /* ── HERO ── */
+  #hero {
+    padding-top: 140px;
+    padding-bottom: 100px;
+    background: var(--off-white);
+    position: relative;
+    overflow: hidden;
+  }
+  #hero::before {
+    content: '';
+    position: absolute;
+    top: -120px; right: -80px;
+    width: 520px; height: 520px;
+    background: radial-gradient(circle, rgba(245,197,24,0.13) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  #hero::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; left: -60px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(27,43,75,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: 100px;
+    padding: 6px 16px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--navy-muted);
+    margin-bottom: 28px;
+    box-shadow: var(--shadow-sm);
+  }
+  .hero-badge .pulse {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #22c55e;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(0.85); }
+  }
+
+  .hero-title {
+    font-family: 'Lora', serif;
+    font-size: clamp(2.6rem, 5vw, 3.8rem);
+    font-weight: 600;
+    line-height: 1.15;
+    color: var(--navy);
+    letter-spacing: -0.5px;
+    margin-bottom: 20px;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--navy-muted);
+  }
+
+  .hero-sub {
+    font-size: 1.05rem;
+    color: var(--text-body);
+    line-height: 1.75;
+    margin-bottom: 36px;
+    max-width: 480px;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+  }
+
+  .trust-bullets {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .trust-bullet {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-body);
+  }
+  .trust-bullet .check {
+    width: 20px; height: 20px;
+    background: var(--navy);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 0.65rem;
+    color: white;
+  }
+
+  /* Hero visual */
+  .hero-visual {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .doc-mockup {
+    background: white;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    padding: 32px 28px;
+    width: 320px;
+    position: relative;
+    z-index: 2;
+  }
+  .doc-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 20px;
+  }
+  .doc-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .doc-line {
+    height: 8px;
+    border-radius: 4px;
+    background: var(--gray-200);
+    margin-bottom: 6px;
+  }
+  .doc-line.accent { background: var(--gold); width: 60%; }
+  .doc-line.dark { background: var(--gray-400); }
+  .doc-line.short { width: 50%; }
+  .doc-line.med { width: 75%; }
+  .doc-line.full { width: 100%; }
+  .doc-line.thin { height: 5px; }
+
+  .doc-section { margin-bottom: 14px; }
+  .doc-section-title {
+    height: 7px;
+    width: 40%;
+    border-radius: 3px;
+    background: var(--navy);
+    margin-bottom: 8px;
+  }
+
+  .floating-tag {
+    position: absolute;
+    background: white;
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-md);
+    padding: 10px 14px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    z-index: 3;
+  }
+  .tag-1 { top: -20px; right: -30px; color: var(--navy); }
+  .tag-2 { bottom: 20px; left: -40px; color: var(--navy); }
+  .tag-icon { font-size: 1rem; }
+
+  /* ── PROBLEM ── */
+  #problem { background: var(--white); }
+  .section-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: 'Lora', serif;
+    font-size: clamp(1.9rem, 3.5vw, 2.6rem);
+    font-weight: 600;
+    line-height: 1.25;
+    color: var(--navy);
+    letter-spacing: -0.3px;
+  }
+  .section-sub {
+    font-size: 1rem;
+    color: var(--text-body);
+    line-height: 1.75;
+    max-width: 560px;
+  }
+
+  .problem-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+    margin-top: 56px;
+  }
+
+  .pain-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .pain-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 16px 20px;
+    background: var(--off-white);
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--text-body);
+    transition: all 0.2s;
+    border-left: 3px solid transparent;
+  }
+  .pain-item:hover {
+    background: #FEF9E7;
+    border-left-color: var(--gold);
+  }
+  .pain-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
+
+  .problem-close {
+    background: var(--navy);
+    color: white;
+    border-radius: var(--radius-lg);
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .problem-close p {
+    font-size: 1.5rem;
+    font-family: 'Lora', serif;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+  .problem-close span {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.7;
+  }
+
+  /* ── SOLUTION ── */
+  #solution { background: var(--off-white); }
+  .solution-inner { max-width: 1120px; margin: 0 auto; }
+  .solution-header { text-align: center; margin-bottom: 56px; }
+  .solution-header .section-sub { margin: 16px auto 0; }
+
+  .solution-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .sol-card {
+    background: white;
+    border-radius: var(--radius);
+    padding: 32px 28px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--gray-200);
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+  .sol-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .sol-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+  }
+  .sol-card:hover::before { transform: scaleX(1); }
+
+  .sol-icon {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    background: var(--off-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+  }
+  .sol-card h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 8px;
+  }
+  .sol-card p {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  /* ── PRICING ── */
+  #pricing { background: var(--white); }
+  .pricing-header { text-align: center; margin-bottom: 56px; }
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .price-card {
+    background: var(--off-white);
+    border-radius: var(--radius);
+    padding: 28px 24px;
+    border: 1.5px solid transparent;
+    transition: all 0.25s;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .price-card.featured {
+    background: var(--navy);
+    color: white;
+    border-color: var(--navy);
+    transform: scale(1.03);
+    box-shadow: var(--shadow-lg);
+  }
+  .price-card:not(.featured):hover {
+    border-color: var(--navy);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+  }
+  .price-badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    background: var(--gold);
+    color: var(--navy);
+    padding: 3px 10px;
+    border-radius: 100px;
+    width: fit-content;
+    margin-bottom: 4px;
+  }
+  .price-card h3 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.3;
+  }
+  .price-card.featured h3 { color: white; }
+  .price-range {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--navy);
+    font-variant-numeric: tabular-nums;
+  }
+  .price-card.featured .price-range { color: var(--gold); }
+  .price-desc {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+  .price-card.featured .price-desc { color: rgba(255,255,255,0.65); }
+
+  .pricing-note {
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    background: var(--off-white);
+    border-radius: var(--radius-sm);
+    padding: 14px 24px;
+    border: 1px solid var(--gray-200);
+  }
+  .pricing-note strong { color: var(--navy); }
+
+  /* ── HOW IT WORKS ── */
+  #how { background: var(--off-white); }
+  .how-header { text-align: center; margin-bottom: 56px; }
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    position: relative;
+    max-width: 900px;
+    margin: 0 auto 40px;
+  }
+  .steps::before {
+    content: '';
+    position: absolute;
+    top: 36px;
+    left: calc(12.5% + 20px);
+    right: calc(12.5% + 20px);
+    height: 2px;
+    background: linear-gradient(90deg, var(--navy) 0%, var(--gold) 100%);
+    z-index: 0;
+  }
+  .step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0 12px;
+    position: relative;
+    z-index: 1;
+  }
+  .step-num {
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    background: var(--white);
+    border: 2.5px solid var(--navy);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.25s;
+  }
+  .step:hover .step-num {
+    background: var(--navy);
+    transform: scale(1.08);
+  }
+  .step h3 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 8px;
+    line-height: 1.4;
+  }
+  .step p {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  .how-cta-box {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius);
+    padding: 28px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    max-width: 700px;
+    margin: 0 auto;
+    box-shadow: var(--shadow-sm);
+  }
+  .how-cta-box p {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--navy);
+  }
+  .how-cta-box span {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    display: block;
+    margin-top: 3px;
+    font-weight: 400;
+  }
+
+  /* ── TRUST ── */
+  #trust { background: var(--white); }
+  .trust-header { text-align: center; margin-bottom: 56px; }
+  .trust-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+  }
+  .trust-card {
+    padding: 28px 20px;
+    border-radius: var(--radius);
+    border: 1.5px solid var(--gray-200);
+    text-align: center;
+    transition: all 0.25s;
+  }
+  .trust-card:hover {
+    border-color: var(--gold);
+    background: #FFFDF0;
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-sm);
+  }
+  .trust-emoji { font-size: 1.8rem; margin-bottom: 14px; }
+  .trust-card h3 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+  .trust-card p {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  /* ── FAQ ── */
+  #faq { background: var(--off-white); }
+  .faq-inner {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .faq-aside h2 { margin-bottom: 16px; }
+  .faq-aside p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-bottom: 32px;
+  }
+
+  .faq-list { display: flex; flex-direction: column; gap: 12px; }
+  .faq-item {
+    background: white;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--gray-200);
+    overflow: hidden;
+    transition: all 0.2s;
+  }
+  .faq-item.open { border-color: var(--navy); }
+  .faq-q {
+    padding: 20px 24px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--navy);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    user-select: none;
+  }
+  .faq-q:hover { background: var(--off-white); }
+  .faq-arrow {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    background: var(--gray-100);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 0.7rem;
+    transition: all 0.25s;
+  }
+  .faq-item.open .faq-arrow {
+    background: var(--navy);
+    color: white;
+    transform: rotate(180deg);
+  }
+  .faq-a {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease, padding 0.25s;
+    font-size: 0.875rem;
+    color: var(--text-body);
+    line-height: 1.75;
+    padding: 0 24px;
+  }
+  .faq-item.open .faq-a { max-height: 200px; padding: 0 24px 20px; }
+
+  /* ── FINAL CTA ── */
+  #cta {
+    background: var(--navy);
+    text-align: center;
+    padding: 112px 5%;
+    position: relative;
+    overflow: hidden;
+  }
+  #cta::before {
+    content: '';
+    position: absolute;
+    top: -100px; left: 50%;
+    transform: translateX(-50%);
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(245,197,24,0.1) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .cta-inner { position: relative; z-index: 1; max-width: 640px; margin: 0 auto; }
+  #cta .section-label { color: rgba(245,197,24,0.8); }
+  #cta h2 {
+    font-family: 'Lora', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 600;
+    color: white;
+    line-height: 1.25;
+    margin-bottom: 20px;
+    letter-spacing: -0.3px;
+  }
+  #cta p {
+    color: rgba(255,255,255,0.7);
+    font-size: 1rem;
+    line-height: 1.75;
+    margin-bottom: 40px;
+  }
+  .cta-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #111d32;
+    color: rgba(255,255,255,0.75);
+    padding: 64px 5% 40px;
+  }
+  .footer-grid {
+    max-width: 1120px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 64px;
+    padding-bottom: 48px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 32px;
+  }
+  .footer-brand .nav-logo { color: white; margin-bottom: 14px; display: inline-flex; }
+  .footer-brand p {
+    font-size: 0.875rem;
+    line-height: 1.75;
+    color: rgba(255,255,255,0.55);
+    max-width: 300px;
+  }
+  .footer-col h4 {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 20px;
+  }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-links a {
+    text-decoration: none;
+    color: rgba(255,255,255,0.65);
+    font-size: 0.875rem;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-bottom {
+    max-width: 1120px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.3);
+  }
+
+  /* ANIMATIONS */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.65s cubic-bezier(0.22,1,0.36,1), transform 0.65s cubic-bezier(0.22,1,0.36,1);
+  }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+  .fade-up.delay-1 { transition-delay: 0.1s; }
+  .fade-up.delay-2 { transition-delay: 0.2s; }
+  .fade-up.delay-3 { transition-delay: 0.3s; }
+  .fade-up.delay-4 { transition-delay: 0.4s; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .hero-inner { grid-template-columns: 1fr; gap: 48px; }
+    .hero-visual { display: none; }
+    .problem-grid { grid-template-columns: 1fr; gap: 32px; }
+    .solution-cards { grid-template-columns: 1fr; }
+    .pricing-grid { grid-template-columns: 1fr 1fr; }
+    .price-card.featured { transform: none; }
+    .steps::before { display: none; }
+    .steps { grid-template-columns: 1fr 1fr; gap: 28px; }
+    .trust-grid { grid-template-columns: 1fr 1fr; }
+    .faq-inner { grid-template-columns: 1fr; gap: 40px; }
+    .footer-grid { grid-template-columns: 1fr; gap: 40px; }
+    .nav-links { display: none; }
+  }
+  @media (max-width: 600px) {
+    section { padding: 72px 5%; }
+    .pricing-grid { grid-template-columns: 1fr; }
+    .trust-grid { grid-template-columns: 1fr 1fr; }
+    .how-cta-box { flex-direction: column; text-align: center; }
+    .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">Formatify<span class="dot">.</span></a>
+  <ul class="nav-links">
+    <li><a href="#problem">Masalahnya</a></li>
+    <li><a href="#pricing">Harga</a></li>
+    <li><a href="#how">Cara Kerja</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <a href="https://wa.me/628XXXXXXXXX" class="btn btn-primary btn-sm" target="_blank">Kirim Dokumen →</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-badge fade-up">
+        <span class="pulse"></span>
+        Jasa Formatting Tugas Akhir
+      </div>
+      <h1 class="hero-title fade-up delay-1">
+        Rapi itu bukan<br><em>kebetulan.</em>
+      </h1>
+      <p class="hero-sub fade-up delay-2">
+        Formatify membantu tugas akhirmu tampil profesional, terstruktur, dan sesuai panduan kampus — tanpa drama, tanpa ribet.
+      </p>
+      <div class="hero-ctas fade-up delay-3">
+        <a href="https://wa.me/628XXXXXXXXX" class="btn btn-gold btn-lg" target="_blank">Kirim Dokumen Sekarang</a>
+        <a href="#solution" class="btn btn-outline btn-lg">Lihat Contoh Hasil</a>
+      </div>
+      <div class="trust-bullets fade-up delay-4">
+        <div class="trust-bullet">
+          <span class="check">✓</span>
+          Lihat dulu, bayar kemudian
+        </div>
+        <div class="trust-bullet">
+          <span class="check">✓</span>
+          Revisi sampai benar
+        </div>
+        <div class="trust-bullet">
+          <span class="check">✓</span>
+          Sesuai panduan kampusmu
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-visual fade-up delay-2">
+      <div class="doc-mockup">
+        <div class="doc-header">
+          <div class="doc-dot" style="background:#ff5f57"></div>
+          <div class="doc-dot" style="background:#febc2e"></div>
+          <div class="doc-dot" style="background:#28c840"></div>
+        </div>
+        <div class="doc-line accent" style="height:10px; width:70%; margin-bottom:4px"></div>
+        <div class="doc-line dark thin" style="width:50%; margin-bottom:20px"></div>
+        <div class="doc-section">
+          <div class="doc-section-title"></div>
+          <div class="doc-line thin full"></div>
+          <div class="doc-line thin med"></div>
+          <div class="doc-line thin full"></div>
+          <div class="doc-line thin short"></div>
+        </div>
+        <div class="doc-section">
+          <div class="doc-section-title"></div>
+          <div class="doc-line thin full"></div>
+          <div class="doc-line thin full"></div>
+          <div class="doc-line thin med"></div>
+          <div class="doc-line thin full"></div>
+          <div class="doc-line thin short"></div>
+        </div>
+        <div class="doc-section">
+          <div class="doc-section-title"></div>
+          <div class="doc-line thin full"></div>
+          <div class="doc-line thin med"></div>
+        </div>
+        <div style="height:2px; background:var(--gold); border-radius:2px; margin-top:12px"></div>
+        <div style="display:flex; justify-content:space-between; margin-top:8px; gap:8px">
+          <div class="doc-line thin" style="width:30%; height:5px; margin:0"></div>
+          <div style="font-size:0.6rem; color:var(--gray-400); font-weight:600">✓ Sesuai panduan</div>
+        </div>
+      </div>
+      <div class="floating-tag tag-1">
+        <span class="tag-icon">✨</span>
+        <div>
+          <div style="font-weight:800; font-size:0.75rem; color:var(--navy)">Format selesai!</div>
+          <div style="font-size:0.65rem; color:var(--text-muted); font-weight:400">Siap untuk dicek</div>
+        </div>
+      </div>
+      <div class="floating-tag tag-2">
+        <span class="tag-icon">🔒</span>
+        <div>
+          <div style="font-weight:800; font-size:0.75rem; color:var(--navy)">Bayar setelah puas</div>
+          <div style="font-size:0.65rem; color:var(--text-muted); font-weight:400">Tanpa DP, tanpa risiko</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section id="problem">
+  <div class="container">
+    <div class="section-label fade-up">Kamu tidak sendirian</div>
+    <h2 class="section-title fade-up delay-1">Isinya udah bagus.<br>Tapi formatnya?</h2>
+    <div class="problem-grid">
+      <ul class="pain-list">
+        <li class="pain-item fade-up">
+          <span class="pain-icon">😩</span>
+          <span>Margin sudah diatur, tapi halaman berikutnya malah berantakan sendiri.</span>
+        </li>
+        <li class="pain-item fade-up delay-1">
+          <span class="pain-icon">📑</span>
+          <span>Daftar isi diketik manual — dan tiap revisi isi, nomor halamannya jadi salah semua.</span>
+        </li>
+        <li class="pain-item fade-up delay-2">
+          <span class="pain-icon">🔢</span>
+          <span>Penomoran tabel dan gambar tidak konsisten, padahal sudah diulang berkali-kali.</span>
+        </li>
+        <li class="pain-item fade-up delay-3">
+          <span class="pain-icon">📋</span>
+          <span>Panduan kampus bilang A, tapi hasil formatnya malah B. Bingung harus mulai dari mana.</span>
+        </li>
+        <li class="pain-item fade-up delay-4">
+          <span class="pain-icon">⏰</span>
+          <span>Waktu habis buat ngurusin teknis, sementara deadline terus mendekat.</span>
+        </li>
+      </ul>
+      <div class="problem-close fade-up delay-2">
+        <p>"Kamu fokus isi.<br>Kami bereskan formatnya."</p>
+        <span>Formatting bukan hal yang seharusnya menguras waktumu. Kerjakan bagian yang paling penting — argumen, data, dan analisis. Sisanya, serahkan ke kami.</span>
+        <a href="https://wa.me/628XXXXXXXXX" class="btn btn-gold" style="width:fit-content; margin-top:8px" target="_blank">Mulai Sekarang</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUTION -->
+<section id="solution">
+  <div class="solution-inner">
+    <div class="solution-header">
+      <div class="section-label fade-up">Yang kami lakukan</div>
+      <h2 class="section-title fade-up delay-1">Kami bukan jasa ketik ulang.</h2>
+      <p class="section-sub fade-up delay-2">Formatify bekerja langsung di file Word-mu — merapikan, menyesuaikan dengan panduan kampus, dan memastikan semuanya konsisten dari halaman pertama sampai terakhir.</p>
+    </div>
+    <div class="solution-cards">
+      <div class="sol-card fade-up">
+        <div class="sol-icon">👁️</div>
+        <h3>Lihat dulu, bayar kemudian</h3>
+        <p>Kami kirimkan hasilnya, kamu cek sendiri. Kalau sudah puas, baru transfer. Tidak ada DP, tidak ada risiko.</p>
+      </div>
+      <div class="sol-card fade-up delay-1">
+        <div class="sol-icon">📐</div>
+        <h3>Sesuai panduan kampusmu</h3>
+        <p>Kirimkan buku panduan kampusmu bersama file, dan kami format sesuai standar yang berlaku — margin, font, spasi, heading, semua.</p>
+      </div>
+      <div class="sol-card fade-up delay-2">
+        <div class="sol-icon">🔄</div>
+        <h3>Revisi sampai benar</h3>
+        <p>Kalau ada yang belum pas setelah kamu cek, kami perbaiki. Tidak ada biaya tambahan untuk revisi terkait format.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="container">
+    <div class="pricing-header">
+      <div class="section-label fade-up">Harga</div>
+      <h2 class="section-title fade-up delay-1">Transparan, ramah mahasiswa.</h2>
+      <p class="section-sub fade-up delay-2" style="margin:16px auto 0">Harga menyesuaikan ketebalan dokumen dan kompleksitas panduan. Tidak ada biaya tersembunyi.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="price-card fade-up">
+        <div class="price-badge">Populer</div>
+        <h3>Formatting Lengkap</h3>
+        <div class="price-range">Rp 50.000–150.000</div>
+        <p class="price-desc">Margin, heading, spasi, halaman, nomor — semua dirapikan sesuai panduan kampus.</p>
+      </div>
+      <div class="price-card fade-up delay-1">
+        <h3>Daftar Isi Otomatis</h3>
+        <div class="price-range">Rp 15.000–30.000</div>
+        <p class="price-desc">Daftar isi yang ter-update otomatis tiap ada perubahan. Tidak perlu edit manual lagi.</p>
+      </div>
+      <div class="price-card fade-up delay-2">
+        <h3>Daftar Tabel & Gambar</h3>
+        <div class="price-range">Rp 15.000–30.000</div>
+        <p class="price-desc">Penomoran konsisten dan daftar otomatis untuk semua tabel dan gambar di dokumenmu.</p>
+      </div>
+      <div class="price-card featured fade-up delay-3">
+        <div class="price-badge">Terlengkap</div>
+        <h3>Paket All-in</h3>
+        <div class="price-range">Rp 75.000–200.000</div>
+        <p class="price-desc">Semua layanan dalam satu paket — formatting lengkap, daftar isi, tabel, dan gambar otomatis.</p>
+      </div>
+    </div>
+    <p class="pricing-note fade-up"><strong>Catatan:</strong> Harga final dikomunikasikan sebelum pengerjaan dimulai. Kamu tahu berapa yang akan dibayar — sebelum kami mulai.</p>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="container">
+    <div class="how-header">
+      <div class="section-label fade-up">Cara kerja</div>
+      <h2 class="section-title fade-up delay-1">Empat langkah. Tanpa ribet.</h2>
+      <p class="section-sub fade-up delay-2" style="margin:16px auto 0">Kamu tidak perlu paham Word yang rumit. Cukup kirim file, dan kami yang urus.</p>
+    </div>
+    <div class="steps">
+      <div class="step fade-up">
+        <div class="step-num">📁</div>
+        <h3>Kirim file &amp; panduan</h3>
+        <p>Bagikan file Word-mu dan buku panduan kampus via WhatsApp atau email.</p>
+      </div>
+      <div class="step fade-up delay-1">
+        <div class="step-num">⚙️</div>
+        <h3>Kami format sesuai standar</h3>
+        <p>Tim kami mengerjakan format sesuai panduan yang kamu kirimkan.</p>
+      </div>
+      <div class="step fade-up delay-2">
+        <div class="step-num">📨</div>
+        <h3>Cek hasil terlebih dahulu</h3>
+        <p>Kami kirimkan file yang sudah diformat. Kamu periksa sendiri.</p>
+      </div>
+      <div class="step fade-up delay-3">
+        <div class="step-num">💛</div>
+        <h3>Suka? Baru bayar.</h3>
+        <p>Kalau sudah puas dengan hasilnya, baru kamu transfer pembayaran.</p>
+      </div>
+    </div>
+    <div class="how-cta-box fade-up">
+      <div>
+        <p>Tanpa DP. Tanpa risiko.</p>
+        <span>Bayar hanya setelah kamu benar-benar puas dengan hasilnya.</span>
+      </div>
+      <a href="https://wa.me/628XXXXXXXXX" class="btn btn-gold" target="_blank" style="flex-shrink:0">Mulai Sekarang →</a>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST -->
+<section id="trust">
+  <div class="container">
+    <div class="trust-header">
+      <div class="section-label fade-up">Mengapa Formatify</div>
+      <h2 class="section-title fade-up delay-1">Dibuat untuk mahasiswa,<br>bukan korporasi.</h2>
+    </div>
+    <div class="trust-grid">
+      <div class="trust-card fade-up">
+        <div class="trust-emoji">🤝</div>
+        <h3>Terpercaya</h3>
+        <p>Bayar setelah puas. Tanpa DP. Risiko nol untuk kamu.</p>
+      </div>
+      <div class="trust-card fade-up delay-1">
+        <div class="trust-emoji">🎯</div>
+        <h3>Teliti</h3>
+        <p>Setiap margin, nomor, dan spasi dicek dengan detail.</p>
+      </div>
+      <div class="trust-card fade-up delay-2">
+        <div class="trust-emoji">⚡</div>
+        <h3>Efisien</h3>
+        <p>Proses cepat, tanpa bolak-balik yang bikin frustrasi.</p>
+      </div>
+      <div class="trust-card fade-up delay-3">
+        <div class="trust-emoji">💰</div>
+        <h3>Terjangkau</h3>
+        <p>Harga yang masuk akal untuk kantong mahasiswa.</p>
+      </div>
+      <div class="trust-card fade-up delay-4">
+        <div class="trust-emoji">💙</div>
+        <h3>Peduli</h3>
+        <p>Kami ngerti betapa stresnya ngurusin tugas akhir.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="container">
+    <div class="faq-inner">
+      <div class="faq-aside fade-up">
+        <div class="section-label">FAQ</div>
+        <h2 class="section-title">Ada yang ingin ditanyakan?</h2>
+        <p style="margin-top:16px">Pertanyaan yang sering muncul — dijawab jujur dan langsung.</p>
+        <a href="https://wa.me/628XXXXXXXXX" class="btn btn-primary" target="_blank">Tanya via WhatsApp</a>
+      </div>
+      <div class="faq-list fade-up delay-1">
+        <div class="faq-item">
+          <div class="faq-q">
+            Berapa lama prosesnya?
+            <div class="faq-arrow">▼</div>
+          </div>
+          <div class="faq-a">Tergantung ketebalan dan kompleksitas dokumenmu. Untuk dokumen standar (50–100 halaman), biasanya selesai dalam 1–2 hari kerja. Kami selalu konfirmasi estimasi waktu sebelum mulai.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">
+            Apakah bisa revisi?
+            <div class="faq-arrow">▼</div>
+          </div>
+          <div class="faq-a">Bisa. Kalau ada bagian yang belum pas setelah kamu cek, cukup beritahu kami dan kami perbaiki tanpa biaya tambahan. Sampai kamu benar-benar puas.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">
+            Apakah file saya aman dan rahasia?
+            <div class="faq-arrow">▼</div>
+          </div>
+          <div class="faq-a">File kamu hanya digunakan untuk keperluan formatting dan tidak akan dibagikan ke siapapun. Kami menghargai privasi dan kerahasiaan karyamu.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">
+            Bagaimana sistem pembayarannya?
+            <div class="faq-arrow">▼</div>
+          </div>
+          <div class="faq-a">Kami kirimkan hasil format terlebih dahulu. Kamu cek sendiri. Kalau sudah puas, baru transfer. Tidak ada DP, tidak ada pembayaran di muka.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">
+            Bisa untuk tesis dan disertasi?
+            <div class="faq-arrow">▼</div>
+          </div>
+          <div class="faq-a">Tentu. Kami melayani skripsi S1, tesis S2, disertasi S3, laporan PKL, magang, dan tugas akhir semester. Selama ada panduan kampus, kami bisa bantu.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">
+            Bagaimana cara kirim file-nya?
+            <div class="faq-arrow">▼</div>
+          </div>
+          <div class="faq-a">Cukup hubungi kami via WhatsApp atau email, lalu kirimkan file Word dan panduan kampusmu. Kami akan konfirmasi estimasi harga dan waktu sebelum mulai pengerjaan.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section id="cta">
+  <div class="cta-inner">
+    <div class="section-label fade-up">Siap mulai?</div>
+    <h2 class="fade-up delay-1">Tugas akhirmu terlalu penting untuk format berantakan.</h2>
+    <p class="fade-up delay-2">Kamu sudah kerja keras mengisi kontennya. Jangan biarkan format jadi alasan revisi yang tidak perlu. Kirim sekarang, lihat hasilnya, bayar kalau puas.</p>
+    <div class="cta-buttons fade-up delay-3">
+      <a href="https://wa.me/628XXXXXXXXX" class="btn btn-gold btn-lg" target="_blank">Kirim File Sekarang →</a>
+      <a href="mailto:hello@formatify.id" class="btn btn-lg" style="background:rgba(255,255,255,0.1); color:white; border:1.5px solid rgba(255,255,255,0.25)">Email Kami</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="#" class="nav-logo">Formatify<span class="dot">.</span></a>
+      <p>Jasa formatting tugas akhir profesional yang teliti, cepat, dan ramah mahasiswa. Rapi itu bukan kebetulan — kami yang pastikan itu.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Navigasi</h4>
+      <ul class="footer-links">
+        <li><a href="#problem">Masalahnya</a></li>
+        <li><a href="#solution">Solusi</a></li>
+        <li><a href="#pricing">Harga</a></li>
+        <li><a href="#how">Cara Kerja</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Kontak</h4>
+      <ul class="footer-links">
+        <li><a href="https://wa.me/628XXXXXXXXX" target="_blank">💬 WhatsApp</a></li>
+        <li><a href="https://instagram.com/formatify.id" target="_blank">📸 @formatify.id</a></li>
+        <li><a href="mailto:hello@formatify.id">✉️ hello@formatify.id</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Formatify. All rights reserved.</span>
+    <span>Rapi itu bukan kebetulan.</span>
+  </div>
+</footer>
+
+<script>
+  // Nav scroll effect
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  // Scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-q').forEach(q => {
+    q.addEventListener('click', () => {
+      const item = q.parentElement;
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+</script>
+</body>
+</html>
